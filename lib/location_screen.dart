@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:clima/utilities/constants.dart';
 
 class LocationScreen extends StatefulWidget {
   @override
@@ -29,7 +28,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
@@ -50,11 +51,16 @@ class _LocationScreenState extends State<LocationScreen> {
                   children: <Widget>[
                     Text(
                       '32°',
-                      style: kTempTextStyle,
+                      style: TextStyle(
+                        fontFamily: 'Spartan MB',
+                        fontSize: 100.0,
+                      ),
                     ),
                     Text(
                       '☀️',
-                      style: kConditionTextStyle,
+                      style: TextStyle(
+                        fontSize: 100.0,
+                      ),
                     ),
                   ],
                 ),
@@ -62,9 +68,12 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  "It's 🍦 time in San Francisco!",
+                  "It's 🍦 time in Mumbai!",
                   textAlign: TextAlign.right,
-                  style: kMessageTextStyle,
+                  style:  TextStyle(
+                    fontFamily: 'Spartan MB',
+                    fontSize: 60.0,
+                  ),
                 ),
               ),
             ],
