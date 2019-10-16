@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:clima/location_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 
 class CityScreen extends StatefulWidget {
   @override
@@ -7,6 +11,20 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
+  Future<Map> fetchWeatherInfo() async {
+    Position position = await Geolocator().getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+    print(position.latitude);
+    print(position.longitude);
+    Response response = await get(
+        'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=4f7b32dc58f4ac156caec77d106358f8');
+    print(response.statusCode);
+    print(response.body);
+    Map jsonMap = jsonDecode(response.body);
+
+    return jsonMap;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +43,6 @@ class _CityScreenState extends State<CityScreen> {
                 alignment: Alignment.topLeft,
                 child: FlatButton(
                   onPressed: () {},
-//                  child: Icon(
-//                    Icons.arrow_back_ios,
-//                    size: 50.0,
-//                  ),
                 ),
               ),
               Container(
@@ -36,11 +50,14 @@ class _CityScreenState extends State<CityScreen> {
                 child: null,
               ),
               FlatButton(
-                onPressed: () {
+                onPressed: () async {
+                  Map jsonData = await fetchWeatherInfo();
+
                   Navigator.push(
                       (context),
                       MaterialPageRoute(
-                          builder: (context) => LocationScreen()));
+                          builder: (context) =>
+                              LocationScreen(jsonMap: jsonData)));
                 },
                 child: Text(
                   'Get Weather',

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
+
 class LocationScreen extends StatefulWidget {
+  Map jsonMap;
+
+  LocationScreen({this.jsonMap});
+
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,10 +56,10 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      '32°',
+                      '${(widget.jsonMap['main']['temp_max']-273).toStringAsFixed(1)}°',
                       style: TextStyle(
                         fontFamily: 'Spartan MB',
-                        fontSize: 100.0,
+                        fontSize: 80.0,
                       ),
                     ),
                     Text(
@@ -68,9 +74,9 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  "It's 🍦 time in Mumbai!",
+                  "It's 🍦 time in ${widget.jsonMap['name']}!",
                   textAlign: TextAlign.right,
-                  style:  TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Spartan MB',
                     fontSize: 60.0,
                   ),
